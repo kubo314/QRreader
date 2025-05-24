@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+
+
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>jsQR Demo</title>
+    <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
+    <style>
+        body {
+            font-family: 'Ropa Sans', sans-serif;
+            color: #333;
+            margin: 0;
+            padding: 10px;
+        }
+
+        #loadingMessage {
+            text-align: center;
+            padding: 40px;
+            background-color: #eee;
+        }
+
+        #canvas {
+            min-height: 80vh;
+        }
+
+        #output {
+            margin-top: 20px;
+            background: #eee;
+            padding: 10px;
+            padding-bottom: 0;
+        }
+
+        #output div {
+            padding-bottom: 10px;
+            word-wrap: break-word;
+        }
+
+        #noQRFound {
+            text-align: center;
+        }
+
+        #img {
+            height: 200px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>QRDERSYSTEM</h1>
+    <div id="loadingMessage">🎥 カメラの使用を許可してください。<br>
+        <img src="./ex.png" id="img" alt="">
+    </div>
+    <canvas id="canvas" hidden></canvas>
+    <div id="output" hidden>
+        <div id="outputMessage">QRコードが見つかりません。</div>
+        <div hidden><b>Data:</b> <span id="outputData"></span></div>
+    </div>
+
+    <form
+        action="https://docs.google.com/forms/u/0/d/e/1FAIpQLSewQV_u7OVY9lHs7O5OiWN9V_EGvaVEVfBFwHdK-mqXppASBQ/formResponse"
+        method="POST" target="hidden_iframe">
+        <input name="entry.940757590" hidden>
+        <input name="entry.579600080" hidden>
+        <input name="entry.586400181" hidden>
+        <input name="entry.963511977" hidden>
+        <input name="entry.1977242286" hidden>
+        <input name="entry.962004891" hidden>
+    </form>
+    <iframe name="hidden_iframe" id="hidden_iframe" style="display: none"></iframe>
+    <script src="./jsframe.js"></script>
+    <script src="./script.js"></script>
+</body>
+
+</html>
