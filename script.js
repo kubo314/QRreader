@@ -9,6 +9,7 @@ const outputData = document.getElementById("outputData");
 const input_elems = document.querySelectorAll("input");
 
 let read_data = "";
+let is_3s_passed = false;
 
 function drawLine(begin, end, color) {
     canvas.beginPath();
@@ -52,20 +53,27 @@ function tick() {
             
             if (read_data === code.data) {
                 read_data = code.data;
-                console.log("aa")
+                if (is_3s_passed) {
+                    show_toast_message("✅すでに読み込まれたコードです。");
+                }
             } else {
                 const decoded_arry = decode_qr_data(code.data);
                 if (decoded_arry) {
                     read_data = code.data;
+                    is_3s_passed = false;
+                    setTimeout(() => {
+                        is_3s_passed = true;
+                    }, 3000);
                     input_elems[0].value = decoded_arry[2]
                     for (let i = 0; i < 5; i++) {
                         input_elems[i + 1].value = decoded_arry[0][i]
                     }
+                    show_toast_message("✅QRコードを読み取りました。");
+                    new Audio("./barcode.mp3").play();
                     document.querySelector("form").submit();
                     document.querySelector("form").reset();
-                    alert("✅QRコードを読み取りました。");
                 } else {
-                    alert("⛔QRコードが不正です。⛔")
+                    show_toast_message("⛔QRコードが不正です。⛔")
                 }
             }
 
@@ -76,7 +84,6 @@ function tick() {
     }
     requestAnimationFrame(tick);
 }
-
 
 function decode_qr_data(data) {
     let decoded_data = "";
@@ -129,4 +136,8 @@ function matches_structure(arr) {
     if (typeof singleStr !== 'string') return false;
 
     return true;
+}
+
+function show_toast_message(message) {
+    document.body.insertAdjacentHTML("beforeend", `<div class="message">${message}</div>`);
 }
